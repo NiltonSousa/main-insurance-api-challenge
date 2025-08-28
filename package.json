@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "build": "npx tsup",
     "start": "npm run build",
@@ -17,7 +18,7 @@
   "license": "ISC",
   "packageManager": "pnpm@10.15.0",
   "devDependencies": {
-    "@faker-js/faker": "^10.0.0",
+    "@faker-js/faker": "^8.3.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^24.3.0",
     "eslint": "^9.34.0",
@@ -35,6 +36,7 @@
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "brazilian-values": "^0.13.1",
     "fastify": "^5.5.0",
     "joi": "^18.0.1",
     "winston": "^3.17.0"

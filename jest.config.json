@@ -1,10 +1,7 @@
 {
-  "transform": {
-    "\\.ts$": ["ts-jest"]
-  },
   "moduleNameMapper": {
-    "^src/(.*)$": "<rootDir>/src/$1",
-    "^tests/(.*)$": "<rootDir>/tests/$1"
+    "@/(.*)": "<rootDir>/src/$1",
+    "@tests/(.*)": "<rootDir>/tests/$1"
   },
   "modulePaths": ["node_modules"],
   "modulePathIgnorePatterns": ["dist"],
@@ -14,7 +11,14 @@
   "testEnvironment": "node",
   "testMatch": ["**/*.spec.ts", "**/*.test.ts"],
   "preset": "ts-jest",
-  "roots": ["<rootDir>/tests", "<rootDir>/src"],
+  "transform": {
+    "\\.ts$": ["ts-jest"]
+  },
+  "roots": [
+    "<rootDir>/tests/unit",
+    "<rootDir>/src",
+    "<rootDir>/tests/integration"
+  ],
   "coveragePathIgnorePatterns": ["dist", "node_modules"],
   "setupFiles": ["./jest.setEnvVars.js"]
 }

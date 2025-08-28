@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      brazilian-values:
+        specifier: ^0.13.1
+        version: 0.13.1
       fastify:
         specifier: ^5.5.0
         version: 5.5.0
@@ -19,8 +22,8 @@ importers:
         version: 3.17.0
     devDependencies:
       '@faker-js/faker':
-        specifier: ^10.0.0
-        version: 10.0.0
+        specifier: ^8.3.1
+        version: 8.3.1
       '@types/jest':
         specifier: ^30.0.0
         version: 30.0.0
@@ -448,9 +451,10 @@ packages:
     resolution: {integrity: sha512-Z5kJ+wU3oA7MMIqVR9tyZRtjYPr4OC004Q4Rw7pgOKUOKkJfZ3O24nz3WYfGRpMDNmcOi3TwQOmgm7B7Tpii0w==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
-  '@faker-js/faker@10.0.0':
-    resolution: {integrity: sha512-UollFEUkVXutsaP+Vndjxar40Gs5JL2HeLcl8xO1QAjJgOdhc3OmBFWyEylS+RddWaaBiAzH+5/17PLQJwDiLw==}
-    engines: {node: ^20.19.0 || ^22.13.0 || ^23.5.0 || >=24.0.0, npm: '>=10'}
+  '@faker-js/faker@8.3.1':
+    resolution: {integrity: sha512-FdgpFxY6V6rLZE9mmIBb9hM0xpfvQOSNOLnzolzKwsE1DH+gC7lEKV1p1IbR0lAYyvYd5a4u3qWJzowUkw1bIw==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
+    deprecated: Please update to a newer version
 
   '@fastify/ajv-compiler@4.0.2':
     resolution: {integrity: sha512-Rkiu/8wIjpsf46Rr+Fitd3HRP+VsxUFDDeag0hs9L0ksfnwx2g7SPQQTFL0E8Qv+rfXzQOxBJnjUB9ITUDjfWQ==}
@@ -1106,6 +1110,9 @@ packages:
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
+
+  brazilian-values@0.13.1:
+    resolution: {integrity: sha512-eWGw5oihWffeFL+0+UIlaCwK7rhpZMMWzqJIqEvwWT+zeIIa6hOgQ9t66juNMVs/Ko98zeHjNbHMGvNiKMFs8w==}
 
   browserslist@4.25.3:
     resolution: {integrity: sha512-cDGv1kkDI4/0e5yON9yM5G/0A5u8sf5TnmdX5C9qHzI9PPu++sQ9zjm1k9NiOrf3riY4OkK0zSGqfvJyJsgCBQ==}
@@ -3354,7 +3361,7 @@ snapshots:
       '@eslint/core': 0.15.2
       levn: 0.4.1
 
-  '@faker-js/faker@10.0.0': {}
+  '@faker-js/faker@8.3.1': {}
 
   '@fastify/ajv-compiler@4.0.2':
     dependencies:
@@ -4121,6 +4128,8 @@ snapshots:
   braces@3.0.3:
     dependencies:
       fill-range: 7.1.1
+
+  brazilian-values@0.13.1: {}
 
   browserslist@4.25.3:
     dependencies:
