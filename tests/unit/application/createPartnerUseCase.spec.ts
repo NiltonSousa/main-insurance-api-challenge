@@ -30,4 +30,24 @@ describe("CreatePartnersUseCase", () => {
       new Error("Partner with this CNPJ already exists")
     );
   });
+
+  it("Should create a partner successfully", async () => {
+    const input: ICreatePartnerUseCaseInput = {
+      name: "test name",
+      cnpj: "cnpj",
+    };
+
+    const mockedPartnerEntity = mockPartnerEntity({
+      ...input,
+      id: "partnerId",
+    });
+
+    partnerRepository.findByCnpj.mockResolvedValue(null);
+    partnerRepository.create.mockResolvedValue(mockedPartnerEntity);
+
+    const partner = await sut.execute(input);
+
+    expect(partner.id).toEqual(mockedPartnerEntity.id);
+    expect(partnerRepository.create).toHaveBeenCalled();
+  });
 });
