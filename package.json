@@ -30,12 +30,14 @@
     "jest-mock-extended": "^4.0.0",
     "jiti": "^2.5.1",
     "prettier": "^3.6.2",
+    "prisma": "^6.15.0",
     "ts-jest": "^29.4.1",
     "tsconfig-paths": "^4.2.0",
     "tsup": "^8.5.0",
     "typescript": "^5.9.2"
   },
   "dependencies": {
+    "@prisma/client": "^6.15.0",
     "brazilian-values": "^0.13.1",
     "fastify": "^5.5.0",
     "joi": "^18.0.1",
