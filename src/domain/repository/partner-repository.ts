@@ -1,6 +1,6 @@
 import { Partner } from "../entity";
 
 export interface IPartnerRepository {
-  create(name: string, cnpj: string): Promise<Partner>;
-  findById(id: string): Promise<Partner | null>;
+  create(entity: Partner): Promise<Partner>;
+  findByCnpj(cnpj: string): Promise<Partner | null>;
 }

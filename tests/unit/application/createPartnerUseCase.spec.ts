@@ -1,9 +1,11 @@
 import { mock, MockProxy } from "jest-mock-extended";
-import { IPartnerRepository } from "src/domain/repository";
+import { IPartnerRepository } from "@/domain/repository";
 import {
   ICreatePartnerUseCase,
   ICreatePartnerUseCaseInput,
-} from "src/domain/usecase";
+} from "@/domain/usecase";
+import { CreatePartnerUseCaseImpl } from "@/application/usecase";
+import { mockPartnerEntity } from "@tests/mock/domain";
 
 describe("CreatePartnersUseCase", () => {
   let sut: ICreatePartnerUseCase;
@@ -11,14 +13,21 @@ describe("CreatePartnersUseCase", () => {
 
   beforeAll(() => {
     partnerRepository = mock();
-    sut = new CreatePartnersUseCase(partnerRepository);
+    sut = new CreatePartnerUseCaseImpl(partnerRepository);
   });
 
-  it("Should throw an errow if partner properties are not provided", async () => {
-    const sutPromise = sut.execute({} as ICreatePartnerUseCaseInput);
+  it("Should throw an errow if partner cnpj already exists", async () => {
+    const cnpj = "cnpj";
+
+    partnerRepository.findByCnpj.mockResolvedValue(mockPartnerEntity({ cnpj }));
+
+    const sutPromise = sut.execute({
+      name: "test name",
+      cnpj,
+    } as ICreatePartnerUseCaseInput);
 
     await expect(sutPromise).rejects.toThrow(
-      new Error("Missing required partner properties")
+      new Error("Partner with this CNPJ already exists")
     );
   });
 });
