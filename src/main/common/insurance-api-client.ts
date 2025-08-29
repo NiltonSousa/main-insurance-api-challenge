@@ -15,7 +15,7 @@ export interface IInsuranceQuotation {
 }
 
 export interface ICreatePoliciesInput {
-  quotationId: string;
+  quotation_id: string;
   name: string;
   sex: SexType;
   date_of_birth: Date;
@@ -26,7 +26,7 @@ export interface IInsurancePolicy {
   quotation_id: string;
   name: string;
   sex: SexType;
-  date_of_birth: Date;
+  date_of_birth: string;
 }
 
 export interface IInsuranceApiHttpClient {
@@ -84,15 +84,13 @@ export class InsuranceApiHttpClient implements IInsuranceApiHttpClient {
   ): Promise<IInsuranceQuotation> {
     const url = `${INSURANCE_API_BASE_URL}/api/quotations`;
 
-    const headers = new Headers({
-      "Content-Type": "application/json",
-      data: JSON.stringify(input),
-      Authorization: `Bearer ${this.accessToken}`,
-    });
-
-    const request: RequestOptions = {
+    const request = {
       method: "POST",
-      headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+      body: JSON.stringify(input),
     };
 
     // this.logger.info(`Requesting kyc result from URL [${url}]`);
@@ -109,15 +107,13 @@ export class InsuranceApiHttpClient implements IInsuranceApiHttpClient {
   async createPolicies(input: ICreatePoliciesInput): Promise<IInsurancePolicy> {
     const url = `${INSURANCE_API_BASE_URL}/api/policies`;
 
-    const headers = new Headers({
-      "Content-Type": "application/json",
-      data: JSON.stringify(input),
-      Authorization: `Bearer ${this.accessToken}`,
-    });
-
-    const request: RequestOptions = {
+    const request = {
       method: "POST",
-      headers,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${this.accessToken}`,
+      },
+      body: JSON.stringify(input),
     };
 
     // this.logger.info(`Requesting kyc result from URL [${url}]`);

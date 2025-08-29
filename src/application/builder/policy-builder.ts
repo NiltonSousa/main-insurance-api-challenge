@@ -23,6 +23,6 @@ export function buildGetPolicyResponse(
     id: input.id,
     name: input.name,
     sex: input.sex,
-    dateOfBirth: input.date_of_birth,
+    dateOfBirth: new Date(input.date_of_birth),
   };
 }

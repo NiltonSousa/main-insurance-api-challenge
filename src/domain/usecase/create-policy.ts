@@ -5,7 +5,7 @@ export interface ICreatePolicyUseCaseInput {
   quotationId: string;
   name: string;
   sex: SexType;
-  dateOfBirth: Date;
+  dateOfBirth: string;
 }
 
 export interface ICreatePolicyUseCaseOutput {
@@ -13,7 +13,7 @@ export interface ICreatePolicyUseCaseOutput {
   id: string;
   name: string;
   sex: SexType;
-  dateOfBirth: Date;
+  dateOfBirth: string;
 }
 
 export interface ICreatePolicyUseCase {

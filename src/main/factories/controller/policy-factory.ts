@@ -4,7 +4,7 @@ import {
 } from "@/application/controller";
 import { JoiValidator } from "@/main/adapters";
 import { makeCreatePolicyUseCase, makeGetPolicyUseCase } from "../usecase";
-import { createPolicyValidation } from "@/main/validators";
+import { createPolicyValidation, getPolicyValidation } from "@/main/validators";
 
 export async function makeCreatePolicyController(): Promise<CreatePolicyController> {
   return new CreatePolicyController(
@@ -16,6 +16,6 @@ export async function makeCreatePolicyController(): Promise<CreatePolicyControll
 export async function makeGetPolicyController(): Promise<GetPolicyController> {
   return new GetPolicyController(
     await makeGetPolicyUseCase(),
-    new JoiValidator(createPolicyValidation)
+    new JoiValidator(getPolicyValidation)
   );
 }

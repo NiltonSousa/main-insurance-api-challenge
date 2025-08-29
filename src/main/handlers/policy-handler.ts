@@ -6,11 +6,19 @@ import {
 import {
   ICreatePolicyUseCaseInput,
   IGetPolicyUseCaseInput,
+  SexType,
 } from "@/domain/usecase";
+
+export interface ICreatePolicyRequestBody {
+  quotation_id: string;
+  name: string;
+  sex: string;
+  date_of_birth: string;
+}
 
 export async function createPolicyHandler(
   request: FastifyRequest<{
-    Body: ICreatePolicyUseCaseInput;
+    Body: ICreatePolicyRequestBody;
     Params: { partner_id: string };
   }>,
   reply: FastifyReply
@@ -20,13 +28,13 @@ export async function createPolicyHandler(
 
     const input: ICreatePolicyUseCaseInput = {
       partnerId: request.params["partner_id"],
-      quotationId: request.body?.quotationId,
+      quotationId: request.body?.quotation_id,
       name: request.body?.name,
-      sex: request.body?.sex,
-      dateOfBirth: request.body?.dateOfBirth,
+      sex: request.body?.sex as unknown as SexType,
+      dateOfBirth: request.body?.date_of_birth,
     };
 
-    const response = controller.control(input);
+    const response = await controller.control(input);
 
     reply.send(response);
   } catch (error: unknown) {
@@ -51,7 +59,7 @@ export async function getPolicyHandler(
       policyId: request.params["policy_id"],
     };
 
-    const response = controller.control(input);
+    const response = await controller.control(input);
 
     reply.send(response);
   } catch (error: unknown) {

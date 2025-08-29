@@ -18,7 +18,7 @@ export async function createQuoteHandler(
       sex: request.body?.sex,
     };
 
-    const response = controller.control(input);
+    const response = await controller.control(input);
 
     reply.send(response);
   } catch (error: unknown) {

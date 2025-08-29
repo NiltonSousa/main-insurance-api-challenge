@@ -23,10 +23,10 @@ export class CreatePolicyUseCaseImpl implements ICreatePolicyUseCase {
     }
 
     const policy = await this.insuranceApiClient.createPolicies({
-      quotationId: input.quotationId,
+      quotation_id: input.quotationId,
       name: input.name,
       sex: input.sex,
-      date_of_birth: input.dateOfBirth,
+      date_of_birth: new Date(input.dateOfBirth),
     });
 
     return buildCreatePolicyResponse(policy);
