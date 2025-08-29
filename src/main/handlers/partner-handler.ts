@@ -16,7 +16,7 @@ export async function createPartnerHandler(
 
     const result = await controller.control(input);
 
-    reply.send(result);
+    reply.status(201).send(result);
   } catch (error: unknown) {
     reply
       .status(500)

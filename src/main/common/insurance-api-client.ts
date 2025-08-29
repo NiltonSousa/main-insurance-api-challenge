@@ -1,6 +1,5 @@
+import { SexType } from "@/domain/usecase";
 import { INSURANCE_API_BASE_URL } from "./env";
-
-type SexType = ["m/M", "f/F", "n/N"];
 
 export interface ICreateQuotationsInput {
   age: number;
@@ -12,25 +11,25 @@ export interface IInsuranceQuotation {
   age: number;
   sex: SexType;
   price: string;
-  expireAt: Date;
+  expire_at: Date;
 }
 
 export interface ICreatePoliciesInput {
   quotationId: string;
   name: string;
   sex: SexType;
-  dateOfBirth: Date;
+  date_of_birth: Date;
 }
 
 export interface IInsurancePolicy {
   id: string;
-  quotationId: string;
+  quotation_id: string;
   name: string;
   sex: SexType;
-  dateOfBirth: Date;
+  date_of_birth: Date;
 }
 
-export interface InsuranceApiHttpClient {
+export interface IInsuranceApiHttpClient {
   createQuotations(input: ICreateQuotationsInput): Promise<IInsuranceQuotation>;
   createPolicies(input: ICreatePoliciesInput): Promise<IInsurancePolicy>;
   getPoliciesById(id: string): Promise<IInsurancePolicy | null>;
@@ -51,7 +50,7 @@ export interface IInsuranceApiAuthentication {
   apiBaseUrl: string;
 }
 
-export class InsuranceApiHttpClient implements InsuranceApiHttpClient {
+export class InsuranceApiHttpClient implements IInsuranceApiHttpClient {
   private accessToken: string | null = null;
 
   constructor(private readonly authentication: IInsuranceApiAuthentication) {}
@@ -160,4 +159,4 @@ export class InsuranceApiHttpClient implements InsuranceApiHttpClient {
   }
 }
 
-export default InsuranceApiHttpClient;
+export default IInsuranceApiHttpClient;

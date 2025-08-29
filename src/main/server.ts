@@ -1,10 +1,11 @@
 import Fastify from "fastify";
-import { createPartnerHandler } from "./handlers";
+import { createPartnerHandler, createQuoteHandler } from "./handlers";
 const fastify = Fastify({
   logger: true,
 });
 
 fastify.post("/partners", createPartnerHandler);
+fastify.post("/quotes", createQuoteHandler);
 
 try {
   fastify.listen({ port: 3000 });

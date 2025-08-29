@@ -1,0 +1,22 @@
+import {
+  ICreateQuoteUseCaseInput,
+  ICreateQuoteUseCase,
+  ICreateQuoteUseCaseOutput,
+} from "@/domain/usecase";
+import IInsuranceApiHttpClient from "@/main/common/insurance-api-client";
+import { buildCreateQuoteResponse } from "../builder";
+
+export class CreateQuoteUseCaseImpl implements ICreateQuoteUseCase {
+  constructor(private readonly insuranceApiClient: IInsuranceApiHttpClient) {}
+
+  async execute(
+    input: ICreateQuoteUseCaseInput
+  ): Promise<ICreateQuoteUseCaseOutput> {
+    const quotation = await this.insuranceApiClient.createQuotations({
+      age: input.age,
+      sex: input.sex,
+    });
+
+    return buildCreateQuoteResponse(quotation);
+  }
+}
