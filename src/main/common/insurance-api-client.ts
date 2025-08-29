@@ -1,0 +1,163 @@
+import { INSURANCE_API_BASE_URL } from "./env";
+
+type SexType = ["m/M", "f/F", "n/N"];
+
+export interface ICreateQuotationsInput {
+  age: number;
+  sex: SexType;
+}
+
+export interface IInsuranceQuotation {
+  id: string;
+  age: number;
+  sex: SexType;
+  price: string;
+  expireAt: Date;
+}
+
+export interface ICreatePoliciesInput {
+  quotationId: string;
+  name: string;
+  sex: SexType;
+  dateOfBirth: Date;
+}
+
+export interface IInsurancePolicy {
+  id: string;
+  quotationId: string;
+  name: string;
+  sex: SexType;
+  dateOfBirth: Date;
+}
+
+export interface InsuranceApiHttpClient {
+  createQuotations(input: ICreateQuotationsInput): Promise<IInsuranceQuotation>;
+  createPolicies(input: ICreatePoliciesInput): Promise<IInsurancePolicy>;
+  getPoliciesById(id: string): Promise<IInsurancePolicy | null>;
+}
+
+interface IToken {
+  access_token: string;
+}
+
+interface RequestOptions {
+  method: string;
+  headers: Headers;
+  body?: string;
+}
+
+export interface IInsuranceApiAuthentication {
+  apiKey: string;
+  apiBaseUrl: string;
+}
+
+export class InsuranceApiHttpClient implements InsuranceApiHttpClient {
+  private accessToken: string | null = null;
+
+  constructor(private readonly authentication: IInsuranceApiAuthentication) {}
+
+  async authenticate(): Promise<void> {
+    const newCredentials = await this.generateKycCredentials();
+
+    this.accessToken = newCredentials.access_token;
+  }
+
+  private async generateKycCredentials(): Promise<IToken> {
+    const { apiKey, apiBaseUrl } = this.authentication;
+    const url = `${apiBaseUrl}/api/auth`;
+
+    const headers = new Headers({
+      "Content-Type": "application/json",
+      "x-api-key": apiKey,
+    });
+
+    const request: RequestOptions = {
+      method: "GET",
+      headers,
+    };
+
+    const response = await fetch(url, request);
+
+    const responseBody = await response.json();
+
+    return responseBody as IToken;
+  }
+
+  async createQuotations(
+    input: ICreateQuotationsInput
+  ): Promise<IInsuranceQuotation> {
+    const url = `${INSURANCE_API_BASE_URL}/api/quotations`;
+
+    const headers = new Headers({
+      "Content-Type": "application/json",
+      data: JSON.stringify(input),
+      Authorization: `Bearer ${this.accessToken}`,
+    });
+
+    const request: RequestOptions = {
+      method: "POST",
+      headers,
+    };
+
+    // this.logger.info(`Requesting kyc result from URL [${url}]`);
+
+    const response = await fetch(url, request);
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    return response.json() as Promise<IInsuranceQuotation>;
+  }
+
+  async createPolicies(input: ICreatePoliciesInput): Promise<IInsurancePolicy> {
+    const url = `${INSURANCE_API_BASE_URL}/api/policies`;
+
+    const headers = new Headers({
+      "Content-Type": "application/json",
+      data: JSON.stringify(input),
+      Authorization: `Bearer ${this.accessToken}`,
+    });
+
+    const request: RequestOptions = {
+      method: "POST",
+      headers,
+    };
+
+    // this.logger.info(`Requesting kyc result from URL [${url}]`);
+
+    const response = await fetch(url, request);
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    return response.json() as Promise<IInsurancePolicy>;
+  }
+
+  async getPoliciesById(id: string): Promise<IInsurancePolicy> {
+    const url = `${INSURANCE_API_BASE_URL}/api/policies/${id}`;
+
+    const headers = new Headers({
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${this.accessToken}`,
+    });
+
+    const request: RequestOptions = {
+      method: "GET",
+      headers,
+    };
+
+    // this.logger.info(`Requesting kyc result from URL [${url}]`);
+
+    const response = await fetch(url, request);
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+
+    return response.json() as Promise<IInsurancePolicy>;
+  }
+}
+
+export default InsuranceApiHttpClient;
