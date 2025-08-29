@@ -1,6 +1,7 @@
 import { SexType } from ".";
 
 export interface ICreatePolicyUseCaseInput {
+  partnerId: string;
   quotationId: string;
   name: string;
   sex: SexType;

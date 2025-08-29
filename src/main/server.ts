@@ -8,7 +8,7 @@ const fastify = Fastify({
 
 fastify.post("/partners", createPartnerHandler);
 fastify.post("/partners/:partner-id/quotes", createQuoteHandler);
-fastify.post("/policies", createPolicyHandler);
+fastify.post("/partners/:partner-id/policies", createPolicyHandler);
 
 try {
   fastify.listen({ port: 3000 });

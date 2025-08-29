@@ -3,13 +3,17 @@ import { makeCreatePolicyController } from "../factories/controller";
 import { ICreatePolicyUseCaseInput } from "@/domain/usecase";
 
 export async function createPolicyHandler(
-  request: FastifyRequest<{ Body: ICreatePolicyUseCaseInput }>,
+  request: FastifyRequest<{
+    Body: ICreatePolicyUseCaseInput;
+    Params: { "partner-id": string };
+  }>,
   reply: FastifyReply
 ): Promise<any> {
   try {
     const controller = await makeCreatePolicyController();
 
     const input: ICreatePolicyUseCaseInput = {
+      partnerId: request.params["partner-id"],
       quotationId: request.body?.quotationId,
       name: request.body?.name,
       sex: request.body?.sex,
