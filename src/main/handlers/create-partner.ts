@@ -2,18 +2,24 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import { makeCreatePartnerController } from "../factories/controller";
 import { ICreatePartnerUseCaseInput } from "@/domain/usecase";
 
-export function createPartnerHandler(
+export async function createPartnerHandler(
   request: FastifyRequest<{ Body: ICreatePartnerUseCaseInput }>,
   reply: FastifyReply
 ) {
-  const controller = makeCreatePartnerController();
+  try {
+    const controller = makeCreatePartnerController();
 
-  const input: ICreatePartnerUseCaseInput = {
-    cnpj: request.body?.cnpj,
-    name: request.body?.name,
-  };
+    const input: ICreatePartnerUseCaseInput = {
+      cnpj: request.body?.cnpj,
+      name: request.body?.name,
+    };
 
-  const result = controller.control(input);
+    const result = await controller.control(input);
 
-  reply.send(result);
+    reply.send(result);
+  } catch (error: unknown) {
+    reply
+      .status(500)
+      .send({ message: (error as Error).message || "Internal server error" });
+  }
 }
