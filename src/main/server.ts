@@ -11,9 +11,9 @@ const fastify = Fastify({
 });
 
 fastify.post("/partners", createPartnerHandler);
-fastify.post("/partners/:partner-id/quotes", createQuoteHandler);
-fastify.post("/partners/:partner-id/policies", createPolicyHandler);
-fastify.get("/partners/:partner-id/policies/:policy-id", getPolicyHandler);
+fastify.post("/partners/:partner_id/quotes", createQuoteHandler);
+fastify.post("/partners/:partner_id/policies", createPolicyHandler);
+fastify.get("/partners/:partner_id/policies/:policy_id", getPolicyHandler);
 
 try {
   fastify.listen({ port: 3000 });

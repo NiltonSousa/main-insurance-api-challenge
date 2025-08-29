@@ -5,7 +5,7 @@ import { ICreateQuoteUseCaseInput } from "@/domain/usecase";
 export async function createQuoteHandler(
   request: FastifyRequest<{
     Body: ICreateQuoteUseCaseInput;
-    Params: { "partner-id": string };
+    Params: { partner_id: string };
   }>,
   reply: FastifyReply
 ): Promise<any> {
@@ -13,7 +13,7 @@ export async function createQuoteHandler(
     const controller = await makeCreateQuoteController();
 
     const input: ICreateQuoteUseCaseInput = {
-      partnerId: request.params["partner-id"],
+      partnerId: request.params["partner_id"],
       age: request.body?.age,
       sex: request.body?.sex,
     };

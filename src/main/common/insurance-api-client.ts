@@ -56,23 +56,20 @@ export class InsuranceApiHttpClient implements IInsuranceApiHttpClient {
   constructor(private readonly authentication: IInsuranceApiAuthentication) {}
 
   async authenticate(): Promise<void> {
-    const newCredentials = await this.generateKycCredentials();
+    const newCredentials = await this.generateInsuranceCredentials();
 
     this.accessToken = newCredentials.access_token;
   }
 
-  private async generateKycCredentials(): Promise<IToken> {
+  private async generateInsuranceCredentials(): Promise<IToken> {
     const { apiKey, apiBaseUrl } = this.authentication;
     const url = `${apiBaseUrl}/api/auth`;
 
-    const headers = new Headers({
-      "Content-Type": "application/json",
-      "x-api-key": apiKey,
-    });
-
-    const request: RequestOptions = {
-      method: "GET",
-      headers,
+    const request = {
+      method: "POST",
+      headers: {
+        "x-api-key": apiKey,
+      },
     };
 
     const response = await fetch(url, request);

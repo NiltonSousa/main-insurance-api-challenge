@@ -11,7 +11,7 @@ import {
 export async function createPolicyHandler(
   request: FastifyRequest<{
     Body: ICreatePolicyUseCaseInput;
-    Params: { "partner-id": string };
+    Params: { partner_id: string };
   }>,
   reply: FastifyReply
 ): Promise<any> {
@@ -19,7 +19,7 @@ export async function createPolicyHandler(
     const controller = await makeCreatePolicyController();
 
     const input: ICreatePolicyUseCaseInput = {
-      partnerId: request.params["partner-id"],
+      partnerId: request.params["partner_id"],
       quotationId: request.body?.quotationId,
       name: request.body?.name,
       sex: request.body?.sex,
@@ -38,16 +38,17 @@ export async function createPolicyHandler(
 
 export async function getPolicyHandler(
   request: FastifyRequest<{
-    Params: { "partner-id": string; "policy-id": string };
+    Params: { partner_id: string; policy_id: string };
   }>,
   reply: FastifyReply
 ): Promise<any> {
   try {
+    console.log("Request params:", request.params);
     const controller = await makeGetPolicyController();
 
     const input: IGetPolicyUseCaseInput = {
-      partnerId: request.params["partner-id"],
-      policyId: request.params["policy-id"],
+      partnerId: request.params["partner_id"],
+      policyId: request.params["policy_id"],
     };
 
     const response = controller.control(input);
