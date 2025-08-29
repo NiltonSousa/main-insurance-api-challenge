@@ -1,6 +1,10 @@
 import Fastify from "fastify";
-import { createPartnerHandler, createQuoteHandler } from "./handlers";
-import { createPolicyHandler } from "./handlers/policy-handler";
+import {
+  createPartnerHandler,
+  createPolicyHandler,
+  createQuoteHandler,
+  getPolicyHandler,
+} from "./handlers";
 
 const fastify = Fastify({
   logger: true,
@@ -9,6 +13,7 @@ const fastify = Fastify({
 fastify.post("/partners", createPartnerHandler);
 fastify.post("/partners/:partner-id/quotes", createQuoteHandler);
 fastify.post("/partners/:partner-id/policies", createPolicyHandler);
+fastify.get("/partners/:partner-id/policies/:policy-id", getPolicyHandler);
 
 try {
   fastify.listen({ port: 3000 });

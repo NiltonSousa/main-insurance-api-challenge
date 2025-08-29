@@ -1,4 +1,7 @@
-import { CreatePolicyUseCaseImpl } from "@/application/usecase";
+import {
+  CreatePolicyUseCaseImpl,
+  GetPolicyUseCaseImpl,
+} from "@/application/usecase";
 import { INSURANCE_API_BASE_URL, INSURANCE_API_KEY } from "@/main/common/env";
 import { InsuranceApiHttpClient } from "@/main/common/insurance-api-client";
 import { PartnerRepository } from "@/main/repositories";
@@ -13,6 +16,20 @@ export async function makeCreatePolicyUseCase(): Promise<CreatePolicyUseCaseImpl
   await insuranceApiHttpClient.authenticate();
 
   return new CreatePolicyUseCaseImpl(
+    new PartnerRepository(new PrismaClient()),
+    insuranceApiHttpClient
+  );
+}
+
+export async function makeGetPolicyUseCase(): Promise<GetPolicyUseCaseImpl> {
+  const insuranceApiHttpClient = new InsuranceApiHttpClient({
+    apiBaseUrl: INSURANCE_API_BASE_URL,
+    apiKey: INSURANCE_API_KEY,
+  });
+
+  await insuranceApiHttpClient.authenticate();
+
+  return new GetPolicyUseCaseImpl(
     new PartnerRepository(new PrismaClient()),
     insuranceApiHttpClient
   );

@@ -1,4 +1,7 @@
-import { ICreatePolicyUseCaseOutput } from "@/domain/usecase";
+import {
+  ICreatePolicyUseCaseOutput,
+  IGetPolicyUseCaseOutput,
+} from "@/domain/usecase";
 import { IInsurancePolicy } from "@/main/common/insurance-api-client";
 
 export function buildCreatePolicyResponse(
@@ -7,6 +10,17 @@ export function buildCreatePolicyResponse(
   return {
     id: input.id,
     quotationId: input.quotation_id,
+    name: input.name,
+    sex: input.sex,
+    dateOfBirth: input.date_of_birth,
+  };
+}
+
+export function buildGetPolicyResponse(
+  input: IInsurancePolicy
+): IGetPolicyUseCaseOutput {
+  return {
+    id: input.id,
     name: input.name,
     sex: input.sex,
     dateOfBirth: input.date_of_birth,

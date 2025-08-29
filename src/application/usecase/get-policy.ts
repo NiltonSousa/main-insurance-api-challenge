@@ -1,0 +1,35 @@
+import {
+  IGetPolicyUseCase,
+  IGetPolicyUseCaseInput,
+  IGetPolicyUseCaseOutput,
+} from "@/domain/usecase";
+import IInsuranceApiHttpClient from "@/main/common/insurance-api-client";
+import { buildGetPolicyResponse } from "../builder";
+import { IPartnerRepository } from "@/domain/repository";
+
+export class GetPolicyUseCaseImpl implements IGetPolicyUseCase {
+  constructor(
+    private readonly partnerRepository: IPartnerRepository,
+    private readonly insuranceApiClient: IInsuranceApiHttpClient
+  ) {}
+
+  async execute(
+    input: IGetPolicyUseCaseInput
+  ): Promise<IGetPolicyUseCaseOutput> {
+    const partner = await this.partnerRepository.findById(input.partnerId);
+
+    if (!partner) {
+      throw new Error("Partner not found");
+    }
+
+    const policy = await this.insuranceApiClient.getPoliciesById(
+      input.policyId
+    );
+
+    if (!policy) {
+      throw new Error("Policy not found");
+    }
+
+    return buildGetPolicyResponse(policy);
+  }
+}
