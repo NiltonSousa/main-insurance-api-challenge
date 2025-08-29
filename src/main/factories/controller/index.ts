@@ -1,2 +1,3 @@
-export * from "./create-partner";
-export * from "./create-quote";
+export * from "./partner-factory";
+export * from "./quote-factory";
+export * from "./policy-factory";

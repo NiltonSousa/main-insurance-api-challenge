@@ -1,4 +1,4 @@
-import { CreateQuoteController } from "@/application/controller/create-quote";
+import { CreateQuoteController } from "@/application/controller/create-quote-controller";
 import { makeCreateQuoteUseCase } from "../usecase";
 import { JoiValidator } from "@/main/adapters";
 import { createQuoteValidation } from "@/main/validators";

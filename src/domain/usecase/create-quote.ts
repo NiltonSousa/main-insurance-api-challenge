@@ -1,4 +1,4 @@
-export type SexType = ["m/M", "f/F", "n/N"];
+import { SexType } from ".";
 
 export interface ICreateQuoteUseCaseInput {
   age: number;
