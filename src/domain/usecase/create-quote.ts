@@ -1,6 +1,7 @@
 import { SexType } from ".";
 
 export interface ICreateQuoteUseCaseInput {
+  partnerId: string;
   age: number;
   sex: SexType;
 }

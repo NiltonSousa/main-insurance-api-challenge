@@ -3,16 +3,21 @@ import { makeCreateQuoteController } from "../factories/controller";
 import { ICreateQuoteUseCaseInput } from "@/domain/usecase";
 
 export async function createQuoteHandler(
-  request: FastifyRequest<{ Body: ICreateQuoteUseCaseInput }>,
+  request: FastifyRequest<{
+    Body: ICreateQuoteUseCaseInput;
+    Params: { "partner-id": string };
+  }>,
   reply: FastifyReply
 ): Promise<any> {
   try {
     const controller = await makeCreateQuoteController();
 
     const input: ICreateQuoteUseCaseInput = {
+      partnerId: request.params["partner-id"],
       age: request.body?.age,
       sex: request.body?.sex,
     };
+
     const response = controller.control(input);
 
     reply.send(response);

@@ -16,6 +16,18 @@ export class PartnerRepository implements IPartnerRepository {
     return Partner.build(partner.id, partner.name, partner.cnpj);
   }
 
+  async findById(id: string): Promise<Partner | null> {
+    const partner = await this.client.partner.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!partner) return null;
+
+    return Partner.build(partner.id, partner.name, partner.cnpj);
+  }
+
   async findByCnpj(cnpj: string): Promise<Partner | null> {
     const partner = await this.client.partner.findUnique({
       where: {

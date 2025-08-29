@@ -7,7 +7,7 @@ const fastify = Fastify({
 });
 
 fastify.post("/partners", createPartnerHandler);
-fastify.post("/quotes", createQuoteHandler);
+fastify.post("/partners/:partner-id/quotes", createQuoteHandler);
 fastify.post("/policies", createPolicyHandler);
 
 try {
