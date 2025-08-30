@@ -4,7 +4,11 @@
     "@tests/(.*)": "<rootDir>/tests/$1"
   },
   "modulePaths": ["node_modules"],
-  "modulePathIgnorePatterns": ["dist"],
+  "modulePathIgnorePatterns": [
+    "dist",
+    "src/main",
+    "src/application/controller"
+  ],
   "collectCoverageFrom": ["src/**/*.ts"],
   "resetMocks": true,
   "clearMocks": true,
