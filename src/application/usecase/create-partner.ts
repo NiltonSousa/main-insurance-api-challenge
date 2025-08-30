@@ -13,7 +13,7 @@ export class CreatePartnerUseCaseImpl implements ICreatePartnerUseCase {
     const partnerExists = await this.partnerRepository.findByCnpj(input.cnpj);
 
     if (partnerExists) {
-      throw new Error("Partner with this CNPJ already exists");
+      return partnerExists;
     }
 
     const createdPartner = await this.partnerRepository.create(

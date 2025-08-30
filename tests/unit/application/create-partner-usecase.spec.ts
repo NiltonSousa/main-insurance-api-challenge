@@ -16,19 +16,19 @@ describe("CreatePartnersUseCase", () => {
     sut = new CreatePartnerUseCaseImpl(partnerRepository);
   });
 
-  it("Should throw an errow if partner cnpj already exists", async () => {
+  it("Should be idempontent if partner already exists", async () => {
     const cnpj = "cnpj";
 
     partnerRepository.findByCnpj.mockResolvedValue(mockPartnerEntity({ cnpj }));
 
-    const sutPromise = sut.execute({
+    const response = await sut.execute({
       name: "test name",
       cnpj,
     } as ICreatePartnerUseCaseInput);
 
-    await expect(sutPromise).rejects.toThrow(
-      new Error("Partner with this CNPJ already exists")
-    );
+    await expect(response).toEqual(mockPartnerEntity({ cnpj }));
+    expect(partnerRepository.findByCnpj).toHaveBeenCalled();
+    expect(partnerRepository.create).not.toHaveBeenCalled();
   });
 
   it("Should create a partner successfully", async () => {
