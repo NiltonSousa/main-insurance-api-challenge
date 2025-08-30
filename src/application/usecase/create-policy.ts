@@ -1,11 +1,11 @@
-import {
+import type {
   ICreatePolicyUseCase,
   ICreatePolicyUseCaseInput,
   ICreatePolicyUseCaseOutput,
 } from "@/domain/usecase";
-import IInsuranceApiHttpClient from "@/main/common/insurance-api-client";
+import type IInsuranceApiHttpClient from "@/main/common/insurance-api-client";
 import { buildCreatePolicyResponse } from "../builder";
-import { IPartnerRepository } from "@/domain/repository";
+import type { IPartnerRepository } from "@/domain/repository";
 
 export class CreatePolicyUseCaseImpl implements ICreatePolicyUseCase {
   constructor(

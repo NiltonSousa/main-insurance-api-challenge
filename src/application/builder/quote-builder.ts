@@ -1,5 +1,5 @@
-import { ICreateQuoteUseCaseOutput } from "@/domain/usecase";
-import { IInsuranceQuotation } from "@/main/common/insurance-api-client";
+import type { ICreateQuoteUseCaseOutput } from "@/domain/usecase";
+import type { IInsuranceQuotation } from "@/main/common/insurance-api-client";
 
 export function buildCreateQuoteResponse(
   input: IInsuranceQuotation

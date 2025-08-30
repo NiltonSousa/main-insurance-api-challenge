@@ -1,10 +1,10 @@
-import { Partner } from "@/domain/entity";
-import {
+import type { Partner } from "@/domain/entity";
+import type {
   ICreatePartnerUseCase,
   ICreatePartnerUseCaseInput,
 } from "@/domain/usecase";
-import { IController } from "./controller";
-import { JoiValidator } from "@/main/adapters";
+import type { IController } from "./controller";
+import type { JoiValidator } from "@/main/adapters";
 
 export class CreatePartnerController
   implements IController<ICreatePartnerUseCaseInput, Partner>

@@ -1,4 +1,4 @@
-import { SexType } from ".";
+import type { SexType } from ".";
 
 export interface IGetPolicyUseCaseInput {
   partnerId: string;
@@ -13,5 +13,5 @@ export interface IGetPolicyUseCaseOutput {
 }
 
 export interface IGetPolicyUseCase {
-  execute(input: IGetPolicyUseCaseInput): Promise<IGetPolicyUseCaseOutput>;
+  execute: (input: IGetPolicyUseCaseInput) => Promise<IGetPolicyUseCaseOutput>;
 }

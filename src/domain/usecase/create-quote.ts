@@ -1,4 +1,4 @@
-import { SexType } from ".";
+import type { SexType } from ".";
 
 export interface ICreateQuoteUseCaseInput {
   partnerId: string;
@@ -15,5 +15,7 @@ export interface ICreateQuoteUseCaseOutput {
 }
 
 export interface ICreateQuoteUseCase {
-  execute(input: ICreateQuoteUseCaseInput): Promise<ICreateQuoteUseCaseOutput>;
+  execute: (
+    input: ICreateQuoteUseCaseInput
+  ) => Promise<ICreateQuoteUseCaseOutput>;
 }

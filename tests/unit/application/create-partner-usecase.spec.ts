@@ -1,6 +1,6 @@
-import { mock, MockProxy } from "jest-mock-extended";
-import { IPartnerRepository } from "@/domain/repository";
-import {
+import { mock, type MockProxy } from "jest-mock-extended";
+import type { IPartnerRepository } from "@/domain/repository";
+import type {
   ICreatePartnerUseCase,
   ICreatePartnerUseCaseInput,
 } from "@/domain/usecase";
@@ -8,11 +8,10 @@ import { CreatePartnerUseCaseImpl } from "@/application/usecase";
 import { mockPartnerEntity } from "@tests/mock/domain";
 
 describe("CreatePartnersUseCase", () => {
+  const partnerRepository: MockProxy<IPartnerRepository> = mock();
   let sut: ICreatePartnerUseCase;
-  let partnerRepository: MockProxy<IPartnerRepository>;
 
-  beforeAll(() => {
-    partnerRepository = mock();
+  beforeEach(() => {
     sut = new CreatePartnerUseCaseImpl(partnerRepository);
   });
 
@@ -24,9 +23,9 @@ describe("CreatePartnersUseCase", () => {
     const response = await sut.execute({
       name: "test name",
       cnpj,
-    } as ICreatePartnerUseCaseInput);
+    } satisfies ICreatePartnerUseCaseInput);
 
-    await expect(response).toEqual(mockPartnerEntity({ cnpj }));
+    expect(response).toEqual(mockPartnerEntity({ cnpj }));
     expect(partnerRepository.findByCnpj).toHaveBeenCalled();
     expect(partnerRepository.create).not.toHaveBeenCalled();
   });

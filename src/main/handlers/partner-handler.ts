@@ -1,17 +1,17 @@
-import { FastifyRequest, FastifyReply } from "fastify";
+import type { FastifyRequest, FastifyReply } from "fastify";
 import { makeCreatePartnerController } from "../factories/controller";
-import { ICreatePartnerUseCaseInput } from "@/domain/usecase";
+import type { ICreatePartnerUseCaseInput } from "@/domain/usecase";
 
 export async function createPartnerHandler(
   request: FastifyRequest<{ Body: ICreatePartnerUseCaseInput }>,
   reply: FastifyReply
-) {
+): Promise<void> {
   try {
     const controller = makeCreatePartnerController();
 
     const input: ICreatePartnerUseCaseInput = {
-      cnpj: request.body?.cnpj,
-      name: request.body?.name,
+      cnpj: request.body.cnpj,
+      name: request.body.name,
     };
 
     const result = await controller.control(input);

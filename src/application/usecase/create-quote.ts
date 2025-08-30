@@ -1,11 +1,11 @@
-import {
+import type {
   ICreateQuoteUseCaseInput,
   ICreateQuoteUseCase,
   ICreateQuoteUseCaseOutput,
 } from "@/domain/usecase";
-import IInsuranceApiHttpClient from "@/main/common/insurance-api-client";
+import type IInsuranceApiHttpClient from "@/main/common/insurance-api-client";
 import { buildCreateQuoteResponse } from "../builder";
-import { IPartnerRepository } from "@/domain/repository";
+import type { IPartnerRepository } from "@/domain/repository";
 
 export class CreateQuoteUseCaseImpl implements ICreateQuoteUseCase {
   constructor(

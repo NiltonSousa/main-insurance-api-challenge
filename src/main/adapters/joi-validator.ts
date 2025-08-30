@@ -1,6 +1,6 @@
-import {
-  type Validator,
-  type ValidatorResult,
+import type {
+  Validator,
+  ValidatorResult,
 } from "@/application/adapter/validator";
 import type { ObjectSchema, StringSchema } from "joi";
 

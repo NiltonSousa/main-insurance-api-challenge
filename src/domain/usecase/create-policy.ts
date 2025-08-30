@@ -1,4 +1,4 @@
-import { SexType } from ".";
+import type { SexType } from ".";
 
 export interface ICreatePolicyUseCaseInput {
   partnerId: string;
@@ -17,7 +17,7 @@ export interface ICreatePolicyUseCaseOutput {
 }
 
 export interface ICreatePolicyUseCase {
-  execute(
+  execute: (
     input: ICreatePolicyUseCaseInput
-  ): Promise<ICreatePolicyUseCaseOutput>;
+  ) => Promise<ICreatePolicyUseCaseOutput>;
 }

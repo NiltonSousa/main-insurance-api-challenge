@@ -1,4 +1,4 @@
-import { SexType } from "@/domain/usecase";
+import type { SexType } from "@/domain/usecase";
 import { INSURANCE_API_BASE_URL } from "./env";
 
 export interface ICreateQuotationsInput {
@@ -30,9 +30,11 @@ export interface IInsurancePolicy {
 }
 
 export interface IInsuranceApiHttpClient {
-  createQuotations(input: ICreateQuotationsInput): Promise<IInsuranceQuotation>;
-  createPolicies(input: ICreatePoliciesInput): Promise<IInsurancePolicy>;
-  getPoliciesById(id: string): Promise<IInsurancePolicy | null>;
+  createQuotations: (
+    input: ICreateQuotationsInput
+  ) => Promise<IInsuranceQuotation>;
+  createPolicies: (input: ICreatePoliciesInput) => Promise<IInsurancePolicy>;
+  getPoliciesById: (id: string) => Promise<IInsurancePolicy | null>;
 }
 
 interface IToken {
@@ -56,9 +58,9 @@ export class InsuranceApiHttpClient implements IInsuranceApiHttpClient {
   constructor(private readonly authentication: IInsuranceApiAuthentication) {}
 
   async authenticate(): Promise<void> {
-    const newCredentials = await this.generateInsuranceCredentials();
+    const { access_token } = await this.generateInsuranceCredentials();
 
-    this.accessToken = newCredentials.access_token;
+    this.accessToken = access_token;
   }
 
   private async generateInsuranceCredentials(): Promise<IToken> {
@@ -101,7 +103,7 @@ export class InsuranceApiHttpClient implements IInsuranceApiHttpClient {
       throw new Error(response.statusText);
     }
 
-    return response.json() as Promise<IInsuranceQuotation>;
+    return await (response.json() as Promise<IInsuranceQuotation>);
   }
 
   async createPolicies(input: ICreatePoliciesInput): Promise<IInsurancePolicy> {
@@ -124,7 +126,7 @@ export class InsuranceApiHttpClient implements IInsuranceApiHttpClient {
       throw new Error(response.statusText);
     }
 
-    return response.json() as Promise<IInsurancePolicy>;
+    return await (response.json() as Promise<IInsurancePolicy>);
   }
 
   async getPoliciesById(id: string): Promise<IInsurancePolicy> {
@@ -148,7 +150,7 @@ export class InsuranceApiHttpClient implements IInsuranceApiHttpClient {
       throw new Error(response.statusText);
     }
 
-    return response.json() as Promise<IInsurancePolicy>;
+    return await (response.json() as Promise<IInsurancePolicy>);
   }
 }
 

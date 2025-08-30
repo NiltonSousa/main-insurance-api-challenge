@@ -1,10 +1,10 @@
-import {
+import type {
   ICreateQuoteUseCase,
   ICreateQuoteUseCaseInput,
   ICreateQuoteUseCaseOutput,
 } from "@/domain/usecase";
-import { JoiValidator } from "@/main/adapters";
-import { IController } from "./controller";
+import type { JoiValidator } from "@/main/adapters";
+import type { IController } from "./controller";
 
 export class CreateQuoteController
   implements IController<ICreateQuoteUseCaseInput, ICreateQuoteUseCaseOutput>

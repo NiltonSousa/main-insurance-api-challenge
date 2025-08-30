@@ -1,8 +1,8 @@
-import {
+import type {
   ICreatePolicyUseCaseOutput,
   IGetPolicyUseCaseOutput,
 } from "@/domain/usecase";
-import { IInsurancePolicy } from "@/main/common/insurance-api-client";
+import type { IInsurancePolicy } from "@/main/common/insurance-api-client";
 
 export function buildCreatePolicyResponse(
   input: IInsurancePolicy

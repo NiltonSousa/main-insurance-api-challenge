@@ -4,5 +4,5 @@ export interface ValidatorResult {
 }
 
 export interface Validator<T> {
-  validate(input: T): ValidatorResult;
+  validate: (input: T) => ValidatorResult;
 }

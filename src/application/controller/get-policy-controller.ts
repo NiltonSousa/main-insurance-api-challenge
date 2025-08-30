@@ -1,10 +1,10 @@
-import {
+import type {
   IGetPolicyUseCase,
   IGetPolicyUseCaseInput,
   IGetPolicyUseCaseOutput,
 } from "@/domain/usecase";
-import { JoiValidator } from "@/main/adapters";
-import { IController } from "./controller";
+import type { JoiValidator } from "@/main/adapters";
+import type { IController } from "./controller";
 
 export class GetPolicyController
   implements IController<IGetPolicyUseCaseInput, IGetPolicyUseCaseOutput>

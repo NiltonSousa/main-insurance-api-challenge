@@ -1,9 +1,9 @@
-import { FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyReply, FastifyRequest } from "fastify";
 import {
   makeCreatePolicyController,
   makeGetPolicyController,
 } from "../factories/controller";
-import {
+import type {
   ICreatePolicyUseCaseInput,
   IGetPolicyUseCaseInput,
   SexType,
@@ -22,16 +22,16 @@ export async function createPolicyHandler(
     Params: { partner_id: string };
   }>,
   reply: FastifyReply
-): Promise<any> {
+): Promise<void> {
   try {
     const controller = await makeCreatePolicyController();
 
     const input: ICreatePolicyUseCaseInput = {
-      partnerId: request.params["partner_id"],
-      quotationId: request.body?.quotation_id,
-      name: request.body?.name,
-      sex: request.body?.sex as unknown as SexType,
-      dateOfBirth: request.body?.date_of_birth,
+      partnerId: request.params.partner_id,
+      quotationId: request.body.quotation_id,
+      name: request.body.name,
+      sex: request.body.sex as unknown as SexType,
+      dateOfBirth: request.body.date_of_birth,
     };
 
     const response = await controller.control(input);
@@ -49,14 +49,14 @@ export async function getPolicyHandler(
     Params: { partner_id: string; policy_id: string };
   }>,
   reply: FastifyReply
-): Promise<any> {
+): Promise<void> {
   try {
     console.log("Request params:", request.params);
     const controller = await makeGetPolicyController();
 
     const input: IGetPolicyUseCaseInput = {
-      partnerId: request.params["partner_id"],
-      policyId: request.params["policy_id"],
+      partnerId: request.params.partner_id,
+      policyId: request.params.policy_id,
     };
 
     const response = await controller.control(input);

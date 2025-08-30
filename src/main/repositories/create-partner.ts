@@ -1,6 +1,6 @@
 import { Partner } from "@/domain/entity";
-import { IPartnerRepository } from "@/domain/repository";
-import { PrismaClient } from "@prisma/client";
+import type { IPartnerRepository } from "@/domain/repository";
+import type { PrismaClient } from "@prisma/client";
 
 export class PartnerRepository implements IPartnerRepository {
   constructor(private readonly client: PrismaClient) {}

@@ -1,4 +1,4 @@
-import { Partner } from "../entity";
+import type { Partner } from "../entity";
 
 export interface ICreatePartnerUseCaseInput {
   name: string;
@@ -6,5 +6,5 @@ export interface ICreatePartnerUseCaseInput {
 }
 
 export interface ICreatePartnerUseCase {
-  execute(input: ICreatePartnerUseCaseInput): Promise<Partner>;
+  execute: (input: ICreatePartnerUseCaseInput) => Promise<Partner>;
 }

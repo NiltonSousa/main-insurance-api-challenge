@@ -1,9 +1,9 @@
-import { Partner } from "@/domain/entity";
-import {
+import type { Partner } from "@/domain/entity";
+import type {
   ICreatePartnerUseCase,
   ICreatePartnerUseCaseInput,
 } from "@/domain/usecase";
-import { IPartnerRepository } from "src/domain/repository";
+import type { IPartnerRepository } from "src/domain/repository";
 import { buildCreatePartnerInput } from "../builder";
 
 export class CreatePartnerUseCaseImpl implements ICreatePartnerUseCase {

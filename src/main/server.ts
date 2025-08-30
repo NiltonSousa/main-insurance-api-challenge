@@ -16,7 +16,7 @@ fastify.post("/partners/:partner_id/policies", createPolicyHandler);
 fastify.get("/partners/:partner_id/policies/:policy_id", getPolicyHandler);
 
 try {
-  fastify.listen({ port: 3000 });
+  await fastify.listen({ port: 3000 });
 } catch (err) {
   fastify.log.error(err);
   process.exit(1);

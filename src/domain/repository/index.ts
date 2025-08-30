@@ -1,1 +1,1 @@
-export * from "./partner-repository";
+export type * from "./partner-repository";

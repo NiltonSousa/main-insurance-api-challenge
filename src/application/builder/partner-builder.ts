@@ -1,5 +1,5 @@
 import { Partner } from "@/domain/entity";
-import { ICreatePartnerUseCaseInput } from "@/domain/usecase";
+import type { ICreatePartnerUseCaseInput } from "@/domain/usecase";
 import { randomUUID } from "node:crypto";
 
 export function buildCreatePartnerInput(
