@@ -5,7 +5,7 @@ import type {
   ICreatePartnerUseCaseInput,
 } from "@/domain/usecase";
 import { CreatePartnerUseCaseImpl } from "@/application/usecase";
-import { mockPartnerEntity } from "@tests/mock/domain";
+import { mockPartnerEntity } from "@tests/mock";
 
 describe("CreatePartnersUseCase", () => {
   const partnerRepository: MockProxy<IPartnerRepository> = mock();
@@ -18,14 +18,15 @@ describe("CreatePartnersUseCase", () => {
   it("Should be idempontent if partner already exists", async () => {
     const cnpj = "cnpj";
 
-    partnerRepository.findByCnpj.mockResolvedValue(mockPartnerEntity({ cnpj }));
+    const partner = mockPartnerEntity({ cnpj });
+    partnerRepository.findByCnpj.mockResolvedValue(partner);
 
     const response = await sut.execute({
       name: "test name",
       cnpj,
     } satisfies ICreatePartnerUseCaseInput);
 
-    expect(response).toEqual(mockPartnerEntity({ cnpj }));
+    expect(response).toEqual(partner);
     expect(partnerRepository.findByCnpj).toHaveBeenCalled();
     expect(partnerRepository.create).not.toHaveBeenCalled();
   });
