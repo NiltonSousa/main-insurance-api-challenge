@@ -18,7 +18,7 @@ export interface ICreatePoliciesInput {
   quotation_id: string;
   name: string;
   sex: SexType;
-  date_of_birth: Date;
+  date_of_birth: string;
 }
 
 export interface IInsurancePolicy {

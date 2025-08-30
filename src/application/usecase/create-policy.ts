@@ -26,7 +26,7 @@ export class CreatePolicyUseCaseImpl implements ICreatePolicyUseCase {
       quotation_id: input.quotationId,
       name: input.name,
       sex: input.sex,
-      date_of_birth: new Date(input.dateOfBirth),
+      date_of_birth: input.dateOfBirth,
     });
 
     return buildCreatePolicyResponse(policy);
