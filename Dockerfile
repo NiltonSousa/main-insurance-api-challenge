@@ -34,6 +34,7 @@ COPY --from=build /app/prisma ./prisma
 
 # expor env pro prisma
 ENV DATABASE_URL="file:/app/prisma/dev.db"
+ENV REQUIRED_API_KEY="b91b548c-9190-41d2-92f2-54f50c839d01"
 
 # Porta e comando
 EXPOSE 3000

@@ -5,9 +5,18 @@ import {
   createQuoteHandler,
   getPolicyHandler,
 } from "./handlers";
+import { REQUIRED_API_KEY } from "./common";
 
 const fastify = Fastify({
   logger: true,
+});
+
+fastify.addHook("preHandler", async (request, reply) => {
+  // opcional: permitir rotas públicas aqui
+  const apiKey = request.headers["x-api-key"];
+  if (!REQUIRED_API_KEY || apiKey !== REQUIRED_API_KEY) {
+    return await reply.code(401).send({ message: "Unauthorized" });
+  }
 });
 
 fastify.post("/partners", createPartnerHandler);
