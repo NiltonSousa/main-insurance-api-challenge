@@ -1,9 +1,7 @@
 import { CreatePartnerUseCaseImpl } from "@/application/usecase";
 import { PartnerRepository } from "@/main/repositories";
-import { PrismaClient } from "@prisma/client";
+import db from "@/main/common/database";
 
 export function makeCreatePartnerUseCase(): CreatePartnerUseCaseImpl {
-  return new CreatePartnerUseCaseImpl(
-    new PartnerRepository(new PrismaClient())
-  );
+  return new CreatePartnerUseCaseImpl(new PartnerRepository(db));
 }

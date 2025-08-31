@@ -1,1 +1,1 @@
-export * from "./create-partner";
+export * from "./partner-repository";

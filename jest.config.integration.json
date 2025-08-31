@@ -2,7 +2,7 @@
   "moduleNameMapper": {
     "@/(.*)": "<rootDir>/src/$1",
     "@tests/(.*)": "<rootDir>/tests/$1",
-    "@tests/unit/(.*)": "<rootDir>/tests/unit/$1"
+    "@tests/integration/(.*)": "<rootDir>/tests/integration/$1"
   },
   "modulePaths": ["node_modules"],
   "modulePathIgnorePatterns": [
@@ -14,12 +14,12 @@
   "resetMocks": true,
   "clearMocks": true,
   "testEnvironment": "node",
-  "testMatch": ["**/*.spec.ts"],
+  "testMatch": ["**/*.test.ts"],
   "preset": "ts-jest",
   "transform": {
     "\\.ts$": ["ts-jest"]
   },
-  "roots": ["<rootDir>/tests/unit", "<rootDir>/src"],
+  "roots": ["<rootDir>/src", "<rootDir>/tests/integration"],
   "coveragePathIgnorePatterns": ["dist", "node_modules"],
   "setupFiles": ["./jest.setEnvVars.js"]
 }
