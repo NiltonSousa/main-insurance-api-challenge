@@ -23,7 +23,7 @@ export function mockInsuranceQuotation(): IInsuranceQuotation {
     id: randomUUID(),
     age: faker.number.int({ min: 18, max: 65 }),
     sex: "F" as unknown as SexType,
-    price: faker.number.int({ min: 100, max: 1000 }).toString(),
-    expire_at: faker.date.future(),
+    price: faker.number.int({ min: 100, max: 1000 }),
+    expire_at: faker.date.future().toISOString(),
   };
 }

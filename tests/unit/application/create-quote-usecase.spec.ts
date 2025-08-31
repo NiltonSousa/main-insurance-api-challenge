@@ -1,5 +1,5 @@
 import { mock, type MockProxy } from "jest-mock-extended";
-import type { IPartnerRepository } from "@/domain/repository";
+import type { IPartnerRepository, IQuoteRepository } from "@/domain/repository";
 import type IInsuranceApiHttpClient from "@/main/common/insurance-api-client";
 import type {
   ICreateQuoteUseCase,
@@ -11,14 +11,21 @@ import { mockInsuranceQuotation, mockPartnerEntity } from "@tests/mock";
 
 describe("CreateQuoteUseCase", () => {
   let partnerRepository: MockProxy<IPartnerRepository>;
+  let quoteRepository: MockProxy<IQuoteRepository>;
+
   let insuranceApiClient: MockProxy<IInsuranceApiHttpClient>;
   let sut: ICreateQuoteUseCase;
 
   beforeEach(() => {
     jest.clearAllMocks();
     partnerRepository = mock<IPartnerRepository>();
+    quoteRepository = mock<IQuoteRepository>();
     insuranceApiClient = mock<IInsuranceApiHttpClient>();
-    sut = new CreateQuoteUseCaseImpl(partnerRepository, insuranceApiClient);
+    sut = new CreateQuoteUseCaseImpl(
+      partnerRepository,
+      quoteRepository,
+      insuranceApiClient
+    );
   });
 
   it("Should throw an error if partner does not exist", async () => {

@@ -1,5 +1,8 @@
 import { mock, type MockProxy } from "jest-mock-extended";
-import type { IPartnerRepository } from "@/domain/repository";
+import type {
+  IPartnerRepository,
+  IPolicyRepository,
+} from "@/domain/repository";
 import type IInsuranceApiHttpClient from "@/main/common/insurance-api-client";
 import type {
   IGetPolicyUseCase,
@@ -7,17 +10,24 @@ import type {
 } from "@/domain/usecase";
 import { GetPolicyUseCaseImpl } from "@/application/usecase";
 import { mockInsurancePolicy, mockPartnerEntity } from "@tests/mock";
+import { mockPolicyEntity } from "@tests/mock/domain/policy";
 
 describe("GetPolicyUseCase", () => {
   let partnerRepository: MockProxy<IPartnerRepository>;
+  let policyRepository: MockProxy<IPolicyRepository>;
   let insuranceApiClient: MockProxy<IInsuranceApiHttpClient>;
   let sut: IGetPolicyUseCase;
 
   beforeEach(() => {
     jest.clearAllMocks();
     partnerRepository = mock<IPartnerRepository>();
+    policyRepository = mock<IPolicyRepository>();
     insuranceApiClient = mock<IInsuranceApiHttpClient>();
-    sut = new GetPolicyUseCaseImpl(partnerRepository, insuranceApiClient);
+    sut = new GetPolicyUseCaseImpl(
+      partnerRepository,
+      policyRepository,
+      insuranceApiClient
+    );
   });
 
   it("Should throw an error if partner does not exist", async () => {
@@ -32,6 +42,22 @@ describe("GetPolicyUseCase", () => {
     expect(partnerRepository.findById).toHaveBeenCalledTimes(1);
     expect(partnerRepository.findById).toHaveBeenCalledWith(input.partnerId);
     expect(insuranceApiClient.getPoliciesById).not.toHaveBeenCalled();
+  });
+
+  it("Should retrieve a policy if it already exists on database", async () => {
+    const input: IGetPolicyUseCaseInput = {
+      partnerId: "p-1",
+      policyId: "pol-1",
+    };
+
+    partnerRepository.findById.mockResolvedValue(mockPartnerEntity());
+    policyRepository.findById.mockResolvedValue(mockPolicyEntity());
+
+    const result = await sut.execute(input);
+
+    expect(insuranceApiClient.getPoliciesById).not.toHaveBeenCalled();
+
+    expect(result).toBeDefined();
   });
 
   it("Should retrieve a policy successfully", async () => {

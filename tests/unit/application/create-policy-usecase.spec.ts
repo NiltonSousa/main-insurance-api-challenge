@@ -1,5 +1,9 @@
 import { mock, type MockProxy } from "jest-mock-extended";
-import type { IPartnerRepository } from "@/domain/repository";
+import type {
+  IPartnerRepository,
+  IPolicyRepository,
+  IQuoteRepository,
+} from "@/domain/repository";
 import type IInsuranceApiHttpClient from "@/main/common/insurance-api-client";
 import type {
   ICreatePolicyUseCase,
@@ -8,17 +12,28 @@ import type {
 } from "@/domain/usecase";
 import { CreatePolicyUseCaseImpl } from "@/application/usecase";
 import { mockInsurancePolicy, mockPartnerEntity } from "@tests/mock";
+import { mockQuoteEntity } from "@tests/mock/domain/quote";
+import { mockPolicyEntity } from "@tests/mock/domain/policy";
 
 describe("CreatePolicyUseCase", () => {
   let partnerRepository: MockProxy<IPartnerRepository>;
+  let quoteRepository: MockProxy<IQuoteRepository>;
+  let policyRepository: MockProxy<IPolicyRepository>;
   let insuranceApiClient: MockProxy<IInsuranceApiHttpClient>;
   let sut: ICreatePolicyUseCase;
 
   beforeEach(() => {
     jest.clearAllMocks();
     partnerRepository = mock<IPartnerRepository>();
+    quoteRepository = mock<IQuoteRepository>();
+    policyRepository = mock<IPolicyRepository>();
     insuranceApiClient = mock<IInsuranceApiHttpClient>();
-    sut = new CreatePolicyUseCaseImpl(partnerRepository, insuranceApiClient);
+    sut = new CreatePolicyUseCaseImpl(
+      partnerRepository,
+      quoteRepository,
+      policyRepository,
+      insuranceApiClient
+    );
   });
 
   it("Should throw an error if partner does not exist", async () => {
@@ -38,6 +53,44 @@ describe("CreatePolicyUseCase", () => {
     expect(insuranceApiClient.createPolicies).not.toHaveBeenCalled();
   });
 
+  it("Should throw an error if quotation does not exist", async () => {
+    const input: ICreatePolicyUseCaseInput = {
+      partnerId: "p-1",
+      quotationId: "q-1",
+      name: "Alice",
+      sex: "F" as unknown as SexType,
+      dateOfBirth: "1990-01-01",
+    };
+
+    partnerRepository.findById.mockResolvedValue(mockPartnerEntity());
+    quoteRepository.findById.mockResolvedValue(null);
+
+    await expect(sut.execute(input)).rejects.toThrow("Quotation not found");
+    expect(quoteRepository.findById).toHaveBeenCalledTimes(1);
+    expect(quoteRepository.findById).toHaveBeenCalledWith(input.quotationId);
+    expect(insuranceApiClient.createPolicies).not.toHaveBeenCalled();
+  });
+
+  it("Should retrieve a policy if it already exists", async () => {
+    const input: ICreatePolicyUseCaseInput = {
+      partnerId: "p-1",
+      quotationId: "q-1",
+      name: "Alice",
+      sex: "F" as unknown as SexType,
+      dateOfBirth: "1990-01-01",
+    };
+
+    partnerRepository.findById.mockResolvedValue(mockPartnerEntity());
+    quoteRepository.findById.mockResolvedValue(mockQuoteEntity());
+    policyRepository.findByQuotationId.mockResolvedValue(mockPolicyEntity());
+
+    const result = await sut.execute(input);
+
+    expect(insuranceApiClient.createPolicies).not.toHaveBeenCalled();
+
+    expect(result).toBeDefined();
+  });
+
   it("Should create a policy successfully", async () => {
     const input: ICreatePolicyUseCaseInput = {
       partnerId: "p-1",
@@ -48,6 +101,7 @@ describe("CreatePolicyUseCase", () => {
     };
 
     partnerRepository.findById.mockResolvedValue(mockPartnerEntity());
+    quoteRepository.findById.mockResolvedValue(mockQuoteEntity());
 
     const insurancePolicy = mockInsurancePolicy();
 
@@ -76,6 +130,7 @@ describe("CreatePolicyUseCase", () => {
     };
 
     partnerRepository.findById.mockResolvedValue(mockPartnerEntity());
+    quoteRepository.findById.mockResolvedValue(mockQuoteEntity());
 
     const httpError = new Error("API unavailable");
     insuranceApiClient.createPolicies.mockRejectedValue(httpError);
