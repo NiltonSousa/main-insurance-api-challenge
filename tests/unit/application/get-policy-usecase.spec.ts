@@ -51,7 +51,7 @@ describe("GetPolicyUseCase", () => {
     };
 
     partnerRepository.findById.mockResolvedValue(mockPartnerEntity());
-    policyRepository.findById.mockResolvedValue(mockPolicyEntity());
+    policyRepository.findByPolicyId.mockResolvedValue(mockPolicyEntity());
 
     const result = await sut.execute(input);
 

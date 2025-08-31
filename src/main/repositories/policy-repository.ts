@@ -53,7 +53,7 @@ export class PolicyRepository implements IPolicyRepository {
     });
   }
 
-  async findById(policyId: string): Promise<Policy | null> {
+  async findByPolicyId(policyId: string): Promise<Policy | null> {
     const policy = await this.client.policy.findUnique({
       where: {
         policyId,

@@ -29,7 +29,9 @@ export class GetPolicyUseCaseImpl implements IGetPolicyUseCase {
       throw new Error("Partner not found");
     }
 
-    const existPolicy = await this.policyRepository.findById(input.policyId);
+    const existPolicy = await this.policyRepository.findByPolicyId(
+      input.policyId
+    );
 
     if (existPolicy) {
       return buildGetPolicyResponseFromEntity(existPolicy);
