@@ -4,12 +4,22 @@ import type {
   ICreatePolicyUseCaseOutput,
 } from "@/domain/usecase";
 import type IInsuranceApiHttpClient from "@/main/common/insurance-api-client";
-import { buildCreatePolicyResponse } from "../builder";
-import type { IPartnerRepository } from "@/domain/repository";
+import {
+  buildCreatePolicyInput,
+  buildCreatePolicyResponse,
+  buildPolicyResponseFromEntity,
+} from "../builder";
+import type {
+  IPartnerRepository,
+  IPolicyRepository,
+  IQuoteRepository,
+} from "@/domain/repository";
 
 export class CreatePolicyUseCaseImpl implements ICreatePolicyUseCase {
   constructor(
     private readonly partnerRepository: IPartnerRepository,
+    private readonly quoteRepository: IQuoteRepository,
+    private readonly policyRepository: IPolicyRepository,
     private readonly insuranceApiClient: IInsuranceApiHttpClient
   ) {}
 
@@ -22,12 +32,29 @@ export class CreatePolicyUseCaseImpl implements ICreatePolicyUseCase {
       throw new Error("Partner not found");
     }
 
+    const quotation = await this.quoteRepository.findById(input.quotationId);
+
+    if (!quotation) {
+      throw new Error("Quotation not found");
+    }
+
+    const existPolicyWithQuotationId =
+      await this.policyRepository.findByQuotationId(quotation.quotationId);
+
+    if (existPolicyWithQuotationId) {
+      return buildPolicyResponseFromEntity(existPolicyWithQuotationId);
+    }
+
     const policy = await this.insuranceApiClient.createPolicies({
       quotation_id: input.quotationId,
       name: input.name,
       sex: input.sex,
       date_of_birth: input.dateOfBirth,
     });
+
+    await this.policyRepository.create(
+      buildCreatePolicyInput(partner.id, policy, quotation)
+    );
 
     return buildCreatePolicyResponse(policy);
   }

@@ -25,8 +25,8 @@ export class Policy {
     return new Policy(
       id,
       policyId,
-      partnerId,
       quotationId,
+      partnerId,
       name,
       sex,
       dateOfBirth

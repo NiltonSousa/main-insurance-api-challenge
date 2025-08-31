@@ -31,6 +31,28 @@ export class PolicyRepository implements IPolicyRepository {
     });
   }
 
+  async findByQuotationId(quotationId: string): Promise<Policy | null> {
+    const policy = await this.client.policy.findFirst({
+      where: {
+        quotationId,
+      },
+    });
+
+    if (!policy) return null;
+
+    const { id, policyId, partnerId, name, sex, dateOfBirth } = policy;
+
+    return Policy.build({
+      id,
+      policyId,
+      quotationId,
+      partnerId,
+      name,
+      sex,
+      dateOfBirth,
+    });
+  }
+
   async findById(policyId: string): Promise<Policy | null> {
     const policy = await this.client.policy.findUnique({
       where: {

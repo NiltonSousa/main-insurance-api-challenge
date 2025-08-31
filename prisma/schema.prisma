@@ -41,7 +41,7 @@ model Quote {
 model Policy {
   id          String   @id @default(uuid())
   policyId    String   @unique @map("policy_id")
-  quotationId String   @map("quotation_id")
+  quotationId String   @map("quotation_id") // sem @unique para permitir 1‑N
   partnerId   String   @map("partner_id")
   name        String
   sex         String
@@ -49,6 +49,7 @@ model Policy {
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
 
+  // Relaciona ao campo único Quote.quotationId (não ao id)
   Quote Quote @relation(fields: [quotationId], references: [quotationId], onDelete: Restrict, onUpdate: Cascade)
 
   @@map("policies")
