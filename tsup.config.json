@@ -5,6 +5,5 @@
   "target": "node20",
   "platform": "node",
   "clean": true,
-  "entry": ["src/**/*.ts"],
-  "external": ["@prisma/client", "prisma"]
+  "entry": ["src/**/*.ts"]
 }
