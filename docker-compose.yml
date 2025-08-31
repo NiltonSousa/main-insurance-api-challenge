@@ -1,17 +1,4 @@
 services:
-  # app:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   environment:
-  #     - NODE_ENV=production
-  #     - CHALLENGE_API_URL=http://challenge-api:5000
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - challenge-api
-  #   command: ["node", "dist/main/server.js"]
-
   challenge-api:
     image: public.ecr.aws/i80/challenge-api
     ports:
