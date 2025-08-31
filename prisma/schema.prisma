@@ -15,4 +15,41 @@ model Partner {
   cnpj      String   @unique
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @updatedAt @map("updated_at")
+
+  Quote Quote[]
+
+  @@map("partners")
+}
+
+model Quote {
+  id          String   @id @default(uuid())
+  quotationId String   @unique @map("quotation_id")
+  partnerId   String   @map("partner_id")
+  age         Int
+  sex         String
+  price       String
+  expireAt    String   @map("expire_at")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+
+  Partner Partner  @relation(fields: [partnerId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+  Policy  Policy[]
+
+  @@map("quotes")
+}
+
+model Policy {
+  id          String   @id @default(uuid())
+  policyId    String   @unique @map("policy_id")
+  quotationId String   @map("quotation_id")
+  partnerId   String   @map("partner_id")
+  name        String
+  sex         String
+  dateOfBirth String   @map("date_of_birth")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")
+
+  Quote Quote @relation(fields: [quotationId], references: [quotationId], onDelete: Restrict, onUpdate: Cascade)
+
+  @@map("policies")
 }

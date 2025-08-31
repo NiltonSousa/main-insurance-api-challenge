@@ -38,6 +38,9 @@ export default [
       ],
 
       "@typescript-eslint/init-declarations": 'off',
+      "@typescript-eslint/no-unsafe-call": 'off',
+      "@typescript-eslint/no-unsafe-member-access": 'off',
+      "@typescript-eslint/max-params": 'off',
       "@typescript-eslint/no-unsafe-assignment": 'off',
       "complexity": "off",
       "@typescript-eslint/no-magic-numbers": 'off',
