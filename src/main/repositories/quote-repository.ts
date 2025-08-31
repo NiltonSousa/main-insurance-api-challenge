@@ -30,7 +30,7 @@ export class QuoteRepository implements IQuoteRepository {
     });
   }
 
-  async findById(quotationId: string): Promise<Quote | null> {
+  async findByQuotationId(quotationId: string): Promise<Quote | null> {
     const quote = await this.client.quote.findUnique({
       where: {
         quotationId,

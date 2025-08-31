@@ -63,11 +63,13 @@ describe("CreatePolicyUseCase", () => {
     };
 
     partnerRepository.findById.mockResolvedValue(mockPartnerEntity());
-    quoteRepository.findById.mockResolvedValue(null);
+    quoteRepository.findByQuotationId.mockResolvedValue(null);
 
     await expect(sut.execute(input)).rejects.toThrow("Quotation not found");
-    expect(quoteRepository.findById).toHaveBeenCalledTimes(1);
-    expect(quoteRepository.findById).toHaveBeenCalledWith(input.quotationId);
+    expect(quoteRepository.findByQuotationId).toHaveBeenCalledTimes(1);
+    expect(quoteRepository.findByQuotationId).toHaveBeenCalledWith(
+      input.quotationId
+    );
     expect(insuranceApiClient.createPolicies).not.toHaveBeenCalled();
   });
 
@@ -81,7 +83,7 @@ describe("CreatePolicyUseCase", () => {
     };
 
     partnerRepository.findById.mockResolvedValue(mockPartnerEntity());
-    quoteRepository.findById.mockResolvedValue(mockQuoteEntity());
+    quoteRepository.findByQuotationId.mockResolvedValue(mockQuoteEntity());
     policyRepository.findByQuotationId.mockResolvedValue(mockPolicyEntity());
 
     const result = await sut.execute(input);
@@ -101,7 +103,7 @@ describe("CreatePolicyUseCase", () => {
     };
 
     partnerRepository.findById.mockResolvedValue(mockPartnerEntity());
-    quoteRepository.findById.mockResolvedValue(mockQuoteEntity());
+    quoteRepository.findByQuotationId.mockResolvedValue(mockQuoteEntity());
 
     const insurancePolicy = mockInsurancePolicy();
 
@@ -130,7 +132,7 @@ describe("CreatePolicyUseCase", () => {
     };
 
     partnerRepository.findById.mockResolvedValue(mockPartnerEntity());
-    quoteRepository.findById.mockResolvedValue(mockQuoteEntity());
+    quoteRepository.findByQuotationId.mockResolvedValue(mockQuoteEntity());
 
     const httpError = new Error("API unavailable");
     insuranceApiClient.createPolicies.mockRejectedValue(httpError);

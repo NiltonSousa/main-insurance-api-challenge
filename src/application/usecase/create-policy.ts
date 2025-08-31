@@ -32,7 +32,9 @@ export class CreatePolicyUseCaseImpl implements ICreatePolicyUseCase {
       throw new Error("Partner not found");
     }
 
-    const quotation = await this.quoteRepository.findById(input.quotationId);
+    const quotation = await this.quoteRepository.findByQuotationId(
+      input.quotationId
+    );
 
     if (!quotation) {
       throw new Error("Quotation not found");
