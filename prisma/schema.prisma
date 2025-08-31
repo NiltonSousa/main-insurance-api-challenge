@@ -27,7 +27,7 @@ model Quote {
   partnerId   String   @map("partner_id")
   age         Int
   sex         String
-  price       String
+  price       Int
   expireAt    String   @map("expire_at")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @default(now()) @updatedAt @map("updated_at")

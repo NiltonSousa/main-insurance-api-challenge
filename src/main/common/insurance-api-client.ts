@@ -10,8 +10,8 @@ export interface IInsuranceQuotation {
   id: string;
   age: number;
   sex: SexType;
-  price: string;
-  expire_at: Date;
+  price: number;
+  expire_at: string;
 }
 
 export interface ICreatePoliciesInput {

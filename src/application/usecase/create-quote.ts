@@ -4,12 +4,13 @@ import type {
   ICreateQuoteUseCaseOutput,
 } from "@/domain/usecase";
 import type IInsuranceApiHttpClient from "@/main/common/insurance-api-client";
-import { buildCreateQuoteResponse } from "../builder";
-import type { IPartnerRepository } from "@/domain/repository";
+import { buildCreateQuoteInput, buildCreateQuoteResponse } from "../builder";
+import type { IPartnerRepository, IQuoteRepository } from "@/domain/repository";
 
 export class CreateQuoteUseCaseImpl implements ICreateQuoteUseCase {
   constructor(
     private readonly partnerRepository: IPartnerRepository,
+    private readonly quoteRepository: IQuoteRepository,
     private readonly insuranceApiClient: IInsuranceApiHttpClient
   ) {}
 
@@ -26,6 +27,10 @@ export class CreateQuoteUseCaseImpl implements ICreateQuoteUseCase {
       age: input.age,
       sex: input.sex,
     });
+
+    await this.quoteRepository.create(
+      buildCreateQuoteInput(partner.id, quotation)
+    );
 
     return buildCreateQuoteResponse(quotation);
   }

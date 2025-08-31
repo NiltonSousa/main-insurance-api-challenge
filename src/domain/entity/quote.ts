@@ -4,7 +4,7 @@ export interface QuoteProps {
   partnerId: string;
   age: number;
   sex: string;
-  price: string;
+  price: number;
   expireAt: string;
 }
 
@@ -15,7 +15,7 @@ export class Quote {
     public partnerId: string,
     public age: number,
     public sex: string,
-    public price: string,
+    public price: number,
     public expireAt: string
   ) {}
 

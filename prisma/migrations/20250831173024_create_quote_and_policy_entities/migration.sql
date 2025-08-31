@@ -25,7 +25,7 @@ CREATE TABLE "quotes" (
     "partner_id" TEXT NOT NULL,
     "age" INTEGER NOT NULL,
     "sex" TEXT NOT NULL,
-    "price" TEXT NOT NULL,
+    "price" INTEGER NOT NULL,
     "expire_at" TEXT NOT NULL,
     "created_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,

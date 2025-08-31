@@ -10,8 +10,8 @@ export interface ICreateQuoteUseCaseOutput {
   id: string;
   age: number;
   sex: SexType;
-  price: string;
-  expireAt: Date;
+  priceInCents: number;
+  expireAt: string;
 }
 
 export interface ICreateQuoteUseCase {
