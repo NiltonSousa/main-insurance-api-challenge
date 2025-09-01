@@ -43,8 +43,8 @@
   "dependencies": {
     "@prisma/client": "^6.15.0",
     "brazilian-values": "^0.13.1",
+    "dotenv": "^17.2.1",
     "fastify": "^5.5.0",
-    "joi": "^18.0.1",
-    "winston": "^3.17.0"
+    "joi": "^18.0.1"
   }
 }
